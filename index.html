@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Nice Coffe POS</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#0a3a2a"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Nice Coffe"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--g9:#0a3a2a;--g8:#0f4d37;--g7:#17704c;--g1:#e6f2ec;--bg:#f3f8f5;--tx:#10231a;--mu:#68807400;--mu:#6a8077;--bd:#d9e6de;--rd:#c0392b;--am:#b7791f;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+button,input,select,textarea{font:inherit}
+.app{display:grid;grid-template-columns:216px 1fr;min-height:100vh}
+aside{background:var(--g9);color:#fff;padding:20px 12px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.logo{display:flex;gap:10px;align-items:center;padding:0 8px 18px}
+.logo i{width:38px;height:38px;border-radius:12px;background:#fff;color:var(--g9);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:18px}
+.logo b{font-size:17px;display:block}.logo small{opacity:.65;font-size:11px}
+nav button{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;padding:11px 12px;border-radius:10px;color:#cfe5da;width:calc(100% - 24px);font-weight:500}
+nav button:hover{background:rgba(255,255,255,.08)}nav button.on{background:#fff;color:var(--g9);font-weight:700}
+main{padding:24px;max-width:1200px;width:100%}
+h1{font-size:22px;margin:0 0 4px;color:var(--g9)}.sub{color:var(--mu);margin:0 0 18px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:16px}
+.card h3{margin:0 0 12px;font-size:15px;color:var(--g9)}
+.btn{background:var(--g8);color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;font-weight:600}
+.btn:hover{background:var(--g7)}.btn.o{background:#fff;color:var(--g8);border:1px solid var(--g8)}.btn.r{background:#fff;color:var(--rd);border:1px solid #efc4be}.btn.s{padding:6px 10px;font-size:12.5px;border-radius:8px}.btn:disabled{opacity:.45;cursor:not-allowed}
+input,select,textarea{width:100%;border:1px solid var(--bd);border-radius:10px;padding:9px 11px;background:#fff;color:var(--tx)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--g7);border-color:transparent}
+label{font-size:12px;color:var(--mu);font-weight:600;display:block;margin-bottom:4px}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end}
+.pos{display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.chip{border:1px solid var(--bd);background:#fff;border-radius:99px;padding:5px 13px;cursor:pointer;font-size:13px}.chip.on{background:var(--g8);color:#fff;border-color:var(--g8)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+.pc{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:12px;cursor:pointer;text-align:left}
+.pc:hover{border-color:var(--g7);box-shadow:0 2px 10px rgba(15,77,55,.12)}.pc:disabled{opacity:.5;cursor:not-allowed}
+.pc b{display:block;margin-bottom:6px}.pc .pr{color:var(--g7);font-weight:700}.pc small{color:var(--mu)}
+.cart{position:sticky;top:16px}.ci{display:grid;grid-template-columns:1fr auto;gap:4px 8px;padding:10px 0;border-bottom:1px dashed var(--bd)}
+.qty{display:flex;align-items:center;gap:6px}.qty button{width:26px;height:26px;border-radius:7px;border:1px solid var(--bd);background:#fff;cursor:pointer}
+.row{display:flex;justify-content:space-between;padding:4px 0}.tot{font-size:20px;font-weight:800;color:var(--g9)}
+table{width:100%;border-collapse:collapse}th{text-align:left;font-size:12px;color:var(--mu);padding:8px;border-bottom:2px solid var(--bd);white-space:nowrap}td{padding:9px 8px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.tw{overflow-x:auto}.tag{padding:2px 9px;border-radius:99px;font-size:11.5px;font-weight:700}.ok{background:var(--g1);color:var(--g8)}.low{background:#fdf1d8;color:var(--am)}.out{background:#fbe3e0;color:var(--rd)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.st{background:#fff;border:1px solid var(--bd);border-radius:14px;padding:14px}.st small{color:var(--mu);font-weight:600}.st b{display:block;font-size:20px;margin-top:4px;color:var(--g9)}.st.d{background:var(--g8);color:#fff;border:0}.st.d small{color:#bcd9cb}.st.d b{color:#fff}
+.bars{display:flex;align-items:flex-end;gap:6px;height:140px;padding-top:10px}.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:10px;color:var(--mu)}.bar i{display:block;width:100%;background:var(--g7);border-radius:6px 6px 0 0;min-height:2px}
+.empty{text-align:center;color:var(--mu);padding:26px 10px}
+.mb{position:fixed;inset:0;background:rgba(10,58,42,.5);display:grid;place-items:center;padding:16px;z-index:50}.md{background:#fff;border-radius:16px;padding:20px;max-width:440px;width:100%;max-height:90vh;overflow:auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:var(--g9);color:#fff;padding:10px 18px;border-radius:99px;z-index:60;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.rc{font-family:ui-monospace,Menlo,monospace;font-size:12.5px}.rc hr{border:0;border-top:1px dashed #999}
+.flex{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.mu{color:var(--mu)}
+.pic{height:88px;display:grid;place-items:center;background:var(--g1);border-radius:10px;margin-bottom:8px;overflow:hidden}.pic svg{height:100%;width:auto}.pic img{width:100%;height:100%;object-fit:cover}.pic.big{width:96px;height:96px;flex:none;margin:0}
+.th{width:42px;height:42px;border-radius:9px;background:var(--g1);overflow:hidden;display:grid;place-items:center;flex:none}.th svg,.th img{width:100%;height:100%;object-fit:cover}
+.steam path{animation:st 2.4s ease-in-out infinite;opacity:0}.steam path:nth-child(2){animation-delay:.6s}.steam path:nth-child(3){animation-delay:1.2s}@keyframes st{0%{opacity:0;transform:translateY(6px)}50%{opacity:.9}100%{opacity:0;transform:translateY(-6px)}}
+.ice{animation:bob 2.8s ease-in-out infinite;transform-origin:50px 55px}@keyframes bob{50%{transform:translateY(-3px) rotate(4deg)}}
+.pc:hover .pic svg{animation:hop .5s}.pc:active{transform:scale(.96)}@keyframes hop{40%{transform:translateY(-6px) scale(1.07)}}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:6px;flex:1;min-width:220px}.tile{border:2px solid var(--bd);border-radius:10px;padding:4px;cursor:pointer;text-align:center;font-size:10.5px;background:#fff}.tile svg{height:46px;width:100%}.tg{grid-column:1/-1;font-size:11px;font-weight:700;color:var(--mu);letter-spacing:.06em}.tile.on{border-color:var(--g7);background:var(--g1)}
+.ob{background:var(--g1);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin-bottom:8px;font-weight:600;color:var(--g8)}
+nav button{position:relative}.bdg{background:#e0a458;color:var(--g9);border-radius:99px;font-size:11px;font-style:normal;font-weight:800;padding:0 7px;margin-left:auto}
+#cust{display:none;position:fixed;inset:0;z-index:45;background:var(--bg);overflow:auto;padding-top:env(safe-area-inset-top,0px)}
+.ch{position:sticky;top:0;z-index:2;background:var(--g9);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 20px}.ch .logo b{color:#fff}
+.cx{all:unset;cursor:pointer;color:#cfe5da;font-size:12px;padding:6px 12px;border:1px solid rgba(255,255,255,.3);border-radius:99px}
+.cw{max-width:1000px;margin:0 auto;padding:20px 16px 120px}.cw h2{margin:0 0 4px;color:var(--g9);font-size:24px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-top:6px}
+.cc{background:#fff;border:1px solid var(--bd);border-radius:18px;padding:12px;display:flex;flex-direction:column;animation:pop .4s both}.cc .th{width:100%;height:auto;aspect-ratio:1/1;margin-bottom:8px;border-radius:14px}.cc b{font-size:15px}.cc .pr{color:var(--g7);font-weight:800;margin:2px 0 10px}.cc .btn{margin-top:auto;width:100%}
+.cst{display:flex;align-items:center;justify-content:space-between;margin-top:auto}.cst button{width:40px;height:40px;border-radius:12px;border:0;background:var(--g8);color:#fff;font-size:20px;cursor:pointer}.cst b{font-size:18px}
+.cbar{position:fixed;left:0;right:0;bottom:0;background:var(--g9);color:#fff;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:3}.cbar .btn{background:#fff;color:var(--g9)}
+.cdone{text-align:center;padding-top:50px}.cno{font-size:52px;font-weight:800;color:var(--g8);letter-spacing:.05em;margin:8px 0}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}}
+@media(max-width:900px){.bdg{position:absolute;top:0;right:14%;margin:0}}
+.logo i{overflow:hidden}.logo i img,.logo i svg{width:100%;height:100%;display:block}
+.hero{display:flex;gap:14px;align-items:center;background:linear-gradient(120deg,var(--g9),var(--g7));color:#fff;border-radius:16px;padding:16px 20px;margin-bottom:12px}.hero h1{color:#fff;margin:0;font-size:24px}.hero .hs{color:#cfe5da;font-size:13px;white-space:pre-line}
+.hero i.lg{width:68px;height:68px;border-radius:18px;background:#fff;overflow:hidden;display:block;flex:none;box-shadow:0 2px 10px rgba(0,0,0,.2)}.hero i.lg img,.hero i.lg svg{width:100%;height:100%;display:block}
+.rc svg,.rc img{width:100%;height:100%;object-fit:contain}
+@media(max-width:900px){.app{display:block}aside{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;flex-direction:row;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:40;justify-content:space-around}.logo{display:none}nav{display:flex;width:100%;gap:2px}nav button{flex-direction:column;gap:2px;font-size:11px;padding:7px 2px;width:auto;flex:1;text-align:center;align-items:center}main{padding:16px 14px 100px}.pos{grid-template-columns:1fr}.cart{position:static}}
+@media print{body>*:not(#modal){display:none!important}.mb{position:static;background:none;display:block;padding:0}.md{box-shadow:none;padding:0}.np{display:none!important}}
+</style></head><body>
+<div class="app"><aside><div class="logo" id="lgo"></div><nav id="nav"></nav></aside><main id="main"></main></div>
+<div id="cust"></div><div id="modal"></div><div id="toast"></div>
+<script>
+const K='nicecoffe_v1';let db={products:[],sales:[],purchases:[],adj:[],orders:[]};
+try{const r=localStorage.getItem(K);if(r)db=Object.assign(db,JSON.parse(r))}catch(e){}
+const S={cust:false,cc:[],cs:'menu',ccat:0,cn:'',ct:'',cnote:'',cno:'',cdn:'',lcs:'',order:null,v:'pos',cart:[],cat:'Semua',q:'',disc:'',method:'Tunai',paid:'',edit:null,fa:'',fi:null,range:'today',from:'',to:''};
+const $=s=>document.querySelector(s),P=id=>db.products.find(p=>p.id===id);
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(db))}catch(e){toast('Gagal menyimpan data')}};
+const rp=n=>(n<0?'-':'')+'Rp'+Math.abs(Math.round(n||0)).toLocaleString('id-ID');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const day=t=>new Date(t).toLocaleDateString('sv'),today=()=>day(Date.now());
+const fdt=t=>new Date(t).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const sum=(a,f)=>a.reduce((s,x)=>s+f(x),0);
+function toast(m){const t=$('#toast');t.innerHTML='<div class="toast">'+esc(m)+'</div>';setTimeout(()=>t.innerHTML='',2200)}
+function modal(h){$('#modal').innerHTML='<div class="mb" onclick="if(event.target==this)closeM()"><div class="md">'+h+'</div></div>'}
+const closeM=()=>$('#modal').innerHTML='';
+const NAV=[['pos','🧾','Kasir'],['order','📲','Pesanan'],['prod','☕','Produk'],['stok','📦','Stok'],['belanja','🛒','Belanja'],['lap','📊','Laporan']];
+function go(v){S.v=v;S.edit=null;S.fa='';S.fi=null;render()}
+function navR(){$('#lgo').innerHTML=logoI()+`<div><b>${esc(shop().name)}</b><small>Point of Sale</small></div>`;$('#nav').innerHTML=NAV.map(n=>`<button class="${S.v==n[0]?'on':''}" onclick="go('${n[0]}')"><span>${n[1]}</span>${n[2]}${n[0]=='order'&&nb()?`<em class="bdg">${nb()}</em>`:''}</button>`).join('')+'<button onclick="openCust()"><span>🖥️</span>Pelanggan</button>'+(window.IP?'<button onclick="IP.prompt();IP=null;navR()"><span>⬇️</span>Pasang</button>':'')}
+function render(){if(S.cust)return custR();navR();
+$('#main').innerHTML=({pos:vPos,order:vOrder,prod:vProd,stok:vStok,belanja:vBel,lap:vLap})[S.v]();if(S.v=='pos')grid();scrollTo(0,0)}
+const cats=()=>[...new Set(db.products.map(p=>p.cat).filter(Boolean))];
+const empty=(t,b)=>`<div class="empty">${t}${b?`<br><br><button class="btn" onclick="go('${b[0]}')">${b[1]}</button>`:''}</div>`;
+
+/* GAMBAR */
+const ART={gulaaren:['Kopi Susu Aren','#b98a62','Kopi'],americano:['Americano','#2e1a10','Kopi'],cappuccino:['Cappuccino','#5b3520','Kopi'],matcha:['Matcha Latte','#6fae4f','Matcha'],strawmatcha:['Strawberry Matcha','#f06a8d','Matcha'],boba:['Brown Sugar Boba','#f1e1c8','Non-Kopi'],lychee:['Lychee Tea','#f9d9d4','Tea']};
+const ALIAS={iced:'gulaaren',hot:'cappuccino',latte:'cappuccino',tea:'lychee',choco:'cappuccino',juice:'lychee',shake:'strawmatcha',water:'americano',croissant:'gulaaren',roti:'gulaaren',cake:'gulaaren',donat:'gulaaren',kentang:'gulaaren',nasi:'gulaaren'};
+function art(t){t=ALIAS[t]||(ART[t]?t:'gulaaren');const o='stroke="#0f4d37" stroke-width="3" stroke-linejoin="round"';
+const G='M24 26h52l-6 60a4 4 0 0 1-4 4H34a4 4 0 0 1-4-4z',I='M26.5 38h47l-4 47a3 3 0 0 1-3 3H33.5a3 3 0 0 1-3-3z';
+const R=(y,h,f)=>`<rect x="20" y="${y}" width="60" height="${h}" fill="${f}"/>`;
+const cube=(x,y,r,d)=>`<g class="ice" style="animation-delay:${d}s"><rect x="${x}" y="${y}" width="14" height="14" rx="3" fill="#fff" opacity=".55" transform="rotate(${r} ${x+7} ${y+7})"/></g>`;
+const cubes=cube(36,46,-12,0)+cube(52,58,10,.9);
+const glass=(inner,extra,sc)=>`<path d="M57 6L52 60" stroke="${sc||'#0f4d37'}" stroke-width="${sc?6:4}" stroke-linecap="round"/><path d="${G}" fill="#fff" ${o}/><clipPath id="gc_${t}"><path d="${I}"/></clipPath><g clip-path="url(#gc_${t})">${inner}</g>${extra||''}`;
+let s='<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">',b='';
+if(t=='gulaaren')b=glass(R(38,60,'#c4986f')+R(38,12,'#8a5a3a')+'<path d="M36 44v22M50 44v16M62 44v26" stroke="#4e2a14" stroke-width="3" stroke-linecap="round" opacity=".5"/><path d="M20 76q10-6 20 0t20 0t20 0V92H20z" fill="#4e2a14"/>',cubes);
+else if(t=='americano')b=glass(R(38,60,'#2b170d')+R(38,8,'#4a2c1a'),cubes);
+else if(t=='cappuccino')b='<g class="steam" fill="none" stroke="#8fb3a1" stroke-width="3" stroke-linecap="round"><path d="M36 28c-6-6 6-10 0-18"/><path d="M50 28c-6-6 6-10 0-18"/><path d="M64 28c-6-6 6-10 0-18"/></g><ellipse cx="48" cy="90" rx="38" ry="6" fill="#cfe0d6"/><path d="M22 38h50v26a20 20 0 0 1-20 20H42a20 20 0 0 1-20-20z" fill="#fff" '+o+'/><path d="M72 46h5a9 9 0 0 1 0 18h-5" fill="none" '+o+'/><ellipse cx="47" cy="41" rx="22" ry="6" fill="#f1e4d0"/><path d="M47 45c-7-3-10-6-7-9 2-2 5-1 7 1 2-2 5-3 7-1 3 3 0 6-7 9z" fill="#b9814f"/>';
+else if(t=='matcha')b=glass(R(38,60,'#f3efe2')+'<path d="M20 58q10 6 20 0t20 0t20 0V92H20z" fill="#6fae4f"/>',cubes);
+else if(t=='strawmatcha')b=glass(R(38,60,'#f8eeee')+R(38,14,'#6fae4f')+'<path d="M20 66q10 6 20 0t20 0t20 0V92H20z" fill="#f06a8d"/>','<g class="ice"><path d="M66 20q8-6 16 0q-1 10-8 14q-7-4-8-14z" fill="#e63950" stroke="#fff" stroke-width="2"/><path d="M70 18l4-5 4 5z" fill="#2e8b57"/></g>'+cubes);
+else if(t=='boba')b=glass(R(38,60,'#f4e6d0')+'<path d="M33 40q4 10 0 22M44 40q4 14 0 30M56 40q-4 12 0 26M67 40q-3 8 0 18" stroke="#6b3a1e" stroke-width="3.5" stroke-linecap="round" fill="none" opacity=".8"/><g class="ice" fill="#2a1a12"><circle cx="38" cy="82" r="4.5"/><circle cx="48" cy="83" r="4.5"/><circle cx="58" cy="82" r="4.5"/><circle cx="43" cy="75" r="4.5"/><circle cx="53" cy="75" r="4.5"/><circle cx="63" cy="76" r="4"/></g>','','#f48fb1');
+else b=glass(R(38,60,'#fbe3df'),'<path d="M66 20q6-8 12-2q-4 8-12 2z" fill="#2e8b57"/><g class="ice"><circle cx="74" cy="30" r="9" fill="#fdf1ee" stroke="#d98a8a" stroke-width="2.5"/><circle cx="74" cy="30" r="4" fill="#f6d5d0"/></g>'+cubes);
+return s+'<ellipse cx="50" cy="93" rx="30" ry="3.5" fill="#0a3a2a" opacity=".1"/>'+b+'</svg>'}
+const pic=p=>p.img?`<img src="${p.img}" alt="">`:art(p.art||'gulaaren');
+function pickArt(k){S.fa=k;S.fi='';prevU();const c=$('#f_c');if(c&&(!c.value||Object.values(ART).some(a=>a[2]==c.value)))c.value=ART[k][2]}
+function prevU(){const e=P(S.edit)||{},fi=S.fi===null?(e.img||''):S.fi,fa=S.fa||e.art||'gulaaren';$('#pv').innerHTML=pic({img:fi,art:fa});document.querySelectorAll('.tile').forEach(t=>t.classList.toggle('on',!fi&&t.dataset.k==fa))}
+function upImg(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),k=Math.min(1,240/Math.max(im.width,im.height));c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);S.fi=c.toDataURL('image/jpeg',.8);prevU()};im.src=r.result};r.readAsDataURL(f)}
+
+/* KASIR */
+function vPos(){const c=cats();return `<div class="hero">${logoI('lg')}<div><h1>${esc(shop().name)}</h1><div class="hs">${esc(shop().address)||'Atur alamat & logo di Laporan › Profil Toko'}</div></div></div><p class="sub">Kasir · pilih produk untuk menambah ke keranjang.</p>
+<div class="pos"><div><input id="q" placeholder="Cari produk…" value="${esc(S.q)}" oninput="S.q=this.value;grid()">
+<div class="chips" id="chips"></div><div id="grid" class="grid"></div></div>
+<div class="card cart" id="cart"></div></div>`}
+function grid(){const c=cats(),ch=$('#chips');if(ch)ch.innerHTML=['Semua',...c].map(x=>`<span class="chip ${S.cat==x?'on':''}" onclick="S.cat='${esc(x).replace(/'/g,"\\'")}';grid()">${esc(x)}</span>`).join('');
+const g=$('#grid');if(!g)return;
+if(!db.products.length){g.style.display='block';g.innerHTML=empty('Belum ada produk.<br>Tambahkan produk dulu di menu Produk.',['prod','Tambah Produk']);cartR();return}
+g.style.display='';const l=db.products.filter(p=>(S.cat=='Semua'||p.cat==S.cat)&&p.name.toLowerCase().includes(S.q.toLowerCase()));
+g.innerHTML=l.map(p=>`<button class="pc" ${p.stock<=0?'disabled':''} onclick="add('${p.id}')"><div class="pic">${pic(p)}</div><b>${esc(p.name)}</b><div class="pr">${rp(p.price)}</div><small>Stok: ${p.stock}</small></button>`).join('')||'<div class="empty">Tidak ditemukan</div>';cartR()}
+function add(id){const p=P(id),c=S.cart.find(x=>x.id==id);if(c){if(c.qty>=p.stock)return toast('Stok tidak cukup');c.qty++}else S.cart.push({id,qty:1});cartR()}
+function qty(id,d){const c=S.cart.find(x=>x.id==id),p=P(id);c.qty+=d;if(c.qty>p.stock){c.qty=p.stock;toast('Stok tidak cukup')}if(c.qty<=0)S.cart=S.cart.filter(x=>x!==c);cartR()}
+const sub=()=>sum(S.cart,c=>P(c.id).price*c.qty),dsc=()=>Math.min(Math.max(+S.disc||0,0),sub()),tot=()=>sub()-dsc();
+function cartR(){const e=$('#cart');if(!e)return;
+e.innerHTML=`<h3>Keranjang</h3>${OB()}`+(S.cart.length?S.cart.map(c=>{const p=P(c.id);return `<div class="ci"><div class="flex" style="flex-wrap:nowrap"><div class="th">${pic(p)}</div><div><b>${esc(p.name)}</b><div class="mu">${rp(p.price)}</div></div></div><div style="text-align:right;font-weight:700">${rp(p.price*c.qty)}</div><div class="qty"><button onclick="qty('${c.id}',-1)">−</button><b>${c.qty}</b><button onclick="qty('${c.id}',1)">+</button></div><div style="text-align:right"><button class="btn r s" onclick="qty('${c.id}',-999)">Hapus</button></div></div>`}).join(''):'<div class="empty">Keranjang kosong</div>')+
+`<div style="margin-top:12px"><div class="row"><span>Subtotal</span><span>${rp(sub())}</span></div>
+<div class="row" style="align-items:center"><span>Diskon (Rp)</span><input type="number" min="0" style="width:120px" value="${S.disc}" oninput="S.disc=this.value;tt()"></div>
+<div class="row tot"><span>Total</span><span id="tt">${rp(tot())}</span></div>
+<label style="margin-top:8px">Metode bayar</label><select onchange="S.method=this.value;cartR()">${['Tunai','QRIS','Transfer','Debit'].map(m=>`<option ${S.method==m?'selected':''}>${m}</option>`).join('')}</select>
+${S.method=='Tunai'?`<label style="margin-top:8px">Uang diterima</label><input type="number" min="0" value="${S.paid}" oninput="S.paid=this.value;tt()"><div class="flex" style="margin-top:6px"><button class="btn o s" onclick="S.paid=tot();cartR()">Uang pas</button></div><div class="row"><span>Kembalian</span><b id="kb"></b></div>`:''}
+<div class="flex" style="margin-top:12px"><button class="btn" style="flex:1" ${S.cart.length?'':'disabled'} onclick="pay()">Bayar</button><button class="btn o" ${S.cart.length?'':'disabled'} onclick="S.cart=[];S.disc='';S.paid='';S.order=null;cartR()">Reset</button></div></div>`;tt()}
+function tt(){const t=$('#tt');if(t)t.textContent=rp(tot());const k=$('#kb');if(k){const x=(+S.paid||0)-tot();k.textContent=rp(Math.max(x,0));k.style.color=x<0?'var(--rd)':''}}
+function pay(){const it=S.cart.map(c=>({p:P(c.id),q:c.qty}));for(const x of it)if(x.q>x.p.stock)return toast('Stok '+x.p.name+' tidak cukup');
+const t=tot(),paid=S.method=='Tunai'?+S.paid||0:t;if(paid<t)return toast('Uang diterima kurang');
+const s={id:uid(),no:'TRX-'+String(db.sales.length+1).padStart(4,'0'),ts:Date.now(),items:it.map(x=>({id:x.p.id,name:x.p.name,qty:x.q,price:x.p.price,cost:x.p.cost})),sub:sub(),disc:dsc(),total:t,paid,change:paid-t,method:S.method,cust:(db.orders.find(x=>x.id==S.order)||{}).name||''};
+it.forEach(x=>x.p.stock-=x.q);db.sales.push(s);{const o=db.orders.find(x=>x.id==S.order);if(o){o.st='selesai';o.trx=s.no}S.order=null}save();S.cart=[];S.disc='';S.paid='';render();receipt(s.id)}
+function receipt(id){const s=db.sales.find(x=>x.id==id);modal(`<div class="rc"><div style="text-align:center"><div style="width:56px;height:56px;margin:0 auto 4px">${logoImg()}</div><b style="font-size:16px">${esc(shop().name)}</b><br>${addrH()}${fdt(s.ts)}<br>${s.no}${s.cust?'<br>Pelanggan: '+esc(s.cust):''}</div><hr>${s.items.map(i=>`<div>${esc(i.name)}</div><div class="row"><span>${i.qty} x ${rp(i.price)}</span><span>${rp(i.qty*i.price)}</span></div>`).join('')}<hr><div class="row"><span>Subtotal</span><span>${rp(s.sub)}</span></div>${s.disc?`<div class="row"><span>Diskon</span><span>-${rp(s.disc)}</span></div>`:''}<div class="row"><b>TOTAL</b><b>${rp(s.total)}</b></div><div class="row"><span>${s.method}</span><span>${rp(s.paid)}</span></div><div class="row"><span>Kembali</span><span>${rp(s.change)}</span></div><hr><div style="text-align:center">Terima kasih ☕</div></div><div class="flex np" style="margin-top:14px"><button class="btn" onclick="print()">Cetak</button><button class="btn o" onclick="closeM()">Tutup</button></div>`)}
+
+/* PRODUK */
+function vProd(){const e=db.products.find(p=>p.id==S.edit)||{};const fa=S.fa||e.art||'gulaaren',fi=S.fi===null?(e.img||''):S.fi;return `<h1>Produk</h1><p class="sub">Kelola daftar menu minuman beserta harganya.</p>
+<div class="card"><h3>${S.edit?'Edit Produk':'Tambah Produk'}</h3><div class="fg">
+<div><label>Nama produk</label><input id="f_n" value="${esc(e.name)}" placeholder="mis. Es Kopi Susu"></div>
+<div><label>Kategori</label><input id="f_c" list="cl" value="${esc(e.cat)}" placeholder="mis. Kopi"><datalist id="cl">${[...new Set(['Kopi','Matcha','Non-Kopi','Tea',...cats()])].map(c=>`<option>${esc(c)}`).join('')}</datalist></div>
+<div><label>Harga jual (Rp)</label><input id="f_p" type="number" min="0" value="${e.price??''}"></div>
+<div><label>Modal / HPP per porsi (Rp)</label><input id="f_h" type="number" min="0" value="${e.cost??''}"></div>
+${S.edit?'':`<div><label>Stok awal</label><input id="f_s" type="number" min="0" value="0"></div>`}
+<div><label>Batas stok menipis</label><input id="f_m" type="number" min="0" value="${e.min??5}"></div>
+<div style="grid-column:1/-1"><label>Tampilan produk (pilih ilustrasi animasi atau unggah foto)</label><div class="flex" style="align-items:flex-start"><div class="pic big" id="pv">${pic({img:fi,art:fa})}</div><div class="tiles">${Object.keys(ART).map(k=>`<div class="tile ${!fi&&fa==k?'on':''}" data-k="${k}" onclick="pickArt('${k}')">${art(k)}${ART[k][0]}</div>`).join('')}</div></div><div class="flex" style="margin-top:8px"><input type="file" accept="image/*" style="width:auto;flex:1" onchange="upImg(this)"><button class="btn o s" onclick="S.fi='';prevU()">Hapus foto</button></div></div>
+<div class="flex"><button class="btn" onclick="saveP()">${S.edit?'Simpan':'Tambah'}</button>${S.edit?`<button class="btn o" onclick="go('prod')">Batal</button>`:''}</div></div></div>
+<div class="card"><h3>Daftar Produk (${db.products.length})</h3>${db.products.length?`<div class="tw"><table><tr><th>Produk</th><th>Kategori</th><th>Harga</th><th>Modal</th><th>Margin</th><th>Stok</th><th></th></tr>${db.products.map(p=>`<tr><td><div class="flex" style="flex-wrap:nowrap"><div class="th">${pic(p)}</div><b>${esc(p.name)}</b></div></td><td>${esc(p.cat)||'-'}</td><td>${rp(p.price)}</td><td>${rp(p.cost)}</td><td>${rp(p.price-p.cost)}</td><td>${p.stock}</td><td class="flex"><button class="btn o s" onclick="S.edit='${p.id}';S.fa='';S.fi=null;render();scrollTo(0,0)">Edit</button><button class="btn r s" onclick="delP('${p.id}')">Hapus</button></td></tr>`).join('')}</table></div>`:empty('Belum ada produk. Isi form di atas untuk mulai.')}</div>`}
+function saveP(){const n=$('#f_n').value.trim(),pr=+$('#f_p').value;if(!n||!(pr>0))return toast('Nama dan harga jual wajib diisi');
+const ex=P(S.edit)||{};const o={name:n,cat:$('#f_c').value.trim(),price:pr,cost:+$('#f_h').value||0,min:+$('#f_m').value||0,art:S.fa||ex.art||'gulaaren',img:S.fi===null?(ex.img||''):S.fi};
+if(S.edit)Object.assign(P(S.edit),o);else db.products.push({id:uid(),stock:+$('#f_s').value||0,...o});
+S.edit=null;S.fa='';S.fi=null;save();render();toast('Produk tersimpan')}
+function delP(id){if(confirm('Hapus produk ini? Riwayat penjualan tetap tersimpan.')){db.products=db.products.filter(p=>p.id!=id);S.cart=S.cart.filter(c=>c.id!=id);save();render()}}
+
+/* STOK */
+const stt=p=>p.stock<=0?['out','Habis']:p.stock<=p.min?['low','Menipis']:['ok','Aman'];
+function vStok(){return `<h1>Atur Stok</h1><p class="sub">Pantau dan sesuaikan stok. Stok berkurang otomatis saat penjualan dan bertambah saat belanja.</p>
+<div class="stats"><div class="st"><small>Total produk</small><b>${db.products.length}</b></div><div class="st"><small>Stok menipis / habis</small><b>${db.products.filter(p=>p.stock<=p.min).length}</b></div><div class="st"><small>Nilai stok (modal)</small><b>${rp(sum(db.products,p=>p.stock*p.cost))}</b></div></div>
+<div class="card"><h3>Stok Produk</h3>${db.products.length?`<div class="tw"><table><tr><th>Produk</th><th>Stok</th><th>Status</th><th></th></tr>${db.products.map(p=>{const s=stt(p);return `<tr><td><div class="flex" style="flex-wrap:nowrap"><div class="th">${pic(p)}</div><b>${esc(p.name)}</b></div></td><td>${p.stock}</td><td><span class="tag ${s[0]}">${s[1]}</span></td><td><button class="btn o s" onclick="adjM('${p.id}')">Atur stok</button></td></tr>`}).join('')}</table></div>`:empty('Belum ada produk.',['prod','Tambah Produk'])}</div>
+<div class="card"><h3>Riwayat Penyesuaian</h3>${db.adj.length?`<div class="tw"><table><tr><th>Waktu</th><th>Produk</th><th>Perubahan</th><th>Catatan</th></tr>${db.adj.slice(-30).reverse().map(a=>`<tr><td>${fdt(a.ts)}</td><td>${esc(a.name)}</td><td>${a.d>0?'+':''}${a.d}</td><td>${esc(a.note)}</td></tr>`).join('')}</table></div>`:empty('Belum ada penyesuaian.')}</div>`}
+function adjM(id){const p=P(id);modal(`<h3 style="margin-top:0">Atur stok: ${esc(p.name)}</h3><p class="mu">Stok saat ini: ${p.stock}</p><label>Jenis</label><select id="a_t"><option value="add">Tambah stok</option><option value="sub">Kurangi (rusak/terbuang)</option><option value="set">Set ke jumlah tertentu</option></select><label style="margin-top:8px">Jumlah</label><input id="a_q" type="number" min="0"><label style="margin-top:8px">Catatan</label><input id="a_n" placeholder="opsional"><div class="flex" style="margin-top:14px"><button class="btn" onclick="adj('${id}')">Simpan</button><button class="btn o" onclick="closeM()">Batal</button></div>`)}
+function adj(id){const p=P(id),t=$('#a_t').value,q=+$('#a_q').value;if(!(q>=0)||$('#a_q').value==='')return toast('Isi jumlah');const old=p.stock;p.stock=t=='add'?old+q:t=='sub'?Math.max(old-q,0):q;
+db.adj.push({ts:Date.now(),name:p.name,d:p.stock-old,note:$('#a_n').value});save();closeM();render()}
+
+/* BELANJA */
+function inR(ts){const d=day(ts),t=today();if(S.range=='all')return true;if(S.range=='today')return d==t;if(S.range=='7')return d>=day(Date.now()-6*864e5);if(S.range=='month')return d.slice(0,7)==t.slice(0,7);return(!S.from||d>=S.from)&&(!S.to||d<=S.to)}
+function rangeUI(){return `<div class="flex np" style="margin-bottom:14px"><select style="width:auto" onchange="S.range=this.value;render()">${[['today','Hari ini'],['7','7 hari terakhir'],['month','Bulan ini'],['all','Semua'],['custom','Pilih tanggal']].map(r=>`<option value="${r[0]}" ${S.range==r[0]?'selected':''}>${r[1]}</option>`).join('')}</select>${S.range=='custom'?`<input type="date" style="width:auto" value="${S.from}" onchange="S.from=this.value;render()"> s/d <input type="date" style="width:auto" value="${S.to}" onchange="S.to=this.value;render()">`:''}</div>`}
+function vBel(){const l=db.purchases.filter(p=>inR(p.ts)).sort((a,b)=>b.ts-a.ts);return `<h1>Belanja</h1><p class="sub">Catat belanja bahan/barang. Jika dikaitkan ke produk, stok otomatis bertambah.</p>
+<div class="card"><h3>Catat Belanja</h3><div class="fg">
+<div><label>Tanggal</label><input id="b_d" type="date" value="${today()}"></div>
+<div><label>Nama barang / keterangan</label><input id="b_n" placeholder="mis. Biji kopi 1 kg"></div>
+<div><label>Tambah stok produk (opsional)</label><select id="b_p"><option value="">— Pengeluaran umum —</option>${db.products.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select></div>
+<div><label>Jumlah (porsi bila ke produk)</label><input id="b_q" type="number" min="0" value="1"></div>
+<div><label>Total harga (Rp)</label><input id="b_t" type="number" min="0"></div>
+<div><button class="btn" onclick="saveB()">Simpan</button></div></div></div>
+${rangeUI()}<div class="stats"><div class="st d"><small>Total pengeluaran belanja</small><b>${rp(sum(l,p=>p.total))}</b></div><div class="st"><small>Jumlah transaksi belanja</small><b>${l.length}</b></div></div>
+<div class="card"><h3>Riwayat Belanja</h3>${l.length?`<div class="tw"><table><tr><th>Tanggal</th><th>Barang</th><th>Produk terkait</th><th>Qty</th><th>Total</th><th></th></tr>${l.map(p=>`<tr><td>${day(p.ts)}</td><td>${esc(p.name)}</td><td>${p.pid?esc(P(p.pid)?.name||'(dihapus)'):'-'}</td><td>${p.qty}</td><td><b>${rp(p.total)}</b></td><td><button class="btn r s" onclick="delB('${p.id}')">Hapus</button></td></tr>`).join('')}</table></div>`:empty('Belum ada catatan belanja pada periode ini.')}</div>`}
+function saveB(){const n=$('#b_n').value.trim(),t=+$('#b_t').value,q=+$('#b_q').value||0,pid=$('#b_p').value;if(!n||!(t>0))return toast('Isi nama barang dan total harga');if(pid&&!(q>0))return toast('Isi jumlah');
+db.purchases.push({id:uid(),ts:new Date($('#b_d').value+'T12:00').getTime()||Date.now(),name:n,pid,qty:q,total:t});
+if(pid){const p=P(pid);p.stock+=q;p.cost=Math.round(t/q);db.adj.push({ts:Date.now(),name:p.name,d:q,note:'Belanja: '+n})}
+save();render();toast('Belanja tersimpan')}
+function delB(id){const b=db.purchases.find(x=>x.id==id);if(!confirm('Hapus catatan belanja ini?'+(b.pid?' Stok produk terkait akan dikurangi kembali.':'')))return;
+if(b.pid&&P(b.pid))P(b.pid).stock=Math.max(P(b.pid).stock-b.qty,0);db.purchases=db.purchases.filter(x=>x!=b);save();render()}
+
+/* LAPORAN */
+function vLap(){const sl=db.sales.filter(s=>!s.void&&inR(s.ts)).sort((a,b)=>b.ts-a.ts),pu=db.purchases.filter(p=>inR(p.ts));
+const rev=sum(sl,s=>s.total),hpp=sum(sl,s=>sum(s.items,i=>i.qty*i.cost)),gp=rev-hpp,bel=sum(pu,p=>p.total),items=sum(sl,s=>sum(s.items,i=>i.qty));
+const dm={};sl.forEach(s=>dm[day(s.ts)]=(dm[day(s.ts)]||0)+s.total);const dk=Object.keys(dm).sort().slice(-14),mx=Math.max(...dk.map(k=>dm[k]),1);
+const tp={};sl.forEach(s=>s.items.forEach(i=>{const t=tp[i.name]=tp[i.name]||{q:0,r:0};t.q+=i.qty;t.r+=i.qty*i.price}));const top=Object.entries(tp).sort((a,b)=>b[1].q-a[1].q).slice(0,5);
+const pm={};sl.forEach(s=>pm[s.method]=(pm[s.method]||0)+s.total);
+return `<h1>Laporan Keuangan</h1><p class="sub">Ringkasan penjualan, modal, dan pengeluaran.</p>${rangeUI()}
+<div class="stats"><div class="st d"><small>Penjualan</small><b>${rp(rev)}</b></div><div class="st"><small>HPP (modal terjual)</small><b>${rp(hpp)}</b></div><div class="st"><small>Laba kotor</small><b>${rp(gp)}</b></div><div class="st"><small>Total belanja</small><b>${rp(bel)}</b></div><div class="st d"><small>Selisih kas (Penjualan − Belanja)</small><b>${rp(rev-bel)}</b></div><div class="st"><small>Transaksi / item terjual</small><b>${sl.length} / ${items}</b></div></div>
+<div class="pos" style="grid-template-columns:1fr 1fr"><div class="card"><h3>Penjualan per Hari</h3>${dk.length?`<div class="bars">${dk.map(k=>`<div class="bar" title="${rp(dm[k])}"><i style="height:${dm[k]/mx*100}%"></i>${k.slice(8)}/${k.slice(5,7)}</div>`).join('')}</div>`:empty('Belum ada data')}</div>
+<div class="card"><h3>Produk Terlaris</h3>${top.length?`<table>${top.map(t=>`<tr><td>${esc(t[0])}</td><td>${t[1].q}x</td><td style="text-align:right">${rp(t[1].r)}</td></tr>`).join('')}</table>`:empty('Belum ada data')}<h3 style="margin-top:14px">Metode Pembayaran</h3>${Object.keys(pm).length?`<table>${Object.entries(pm).map(m=>`<tr><td>${m[0]}</td><td style="text-align:right">${rp(m[1])}</td></tr>`).join('')}</table>`:'<span class="mu">-</span>'}</div></div>
+<div class="card"><h3>Riwayat Transaksi</h3>${db.sales.filter(s=>inR(s.ts)).length?`<div class="tw"><table><tr><th>No</th><th>Waktu</th><th>Item</th><th>Metode</th><th>Total</th><th></th></tr>${db.sales.filter(s=>inR(s.ts)).sort((a,b)=>b.ts-a.ts).map(s=>`<tr style="${s.void?'opacity:.5;text-decoration:line-through':''}"><td>${s.no}</td><td>${fdt(s.ts)}</td><td>${s.items.map(i=>esc(i.name)+' ×'+i.qty).join(', ')}</td><td>${s.method}</td><td><b>${rp(s.total)}</b></td><td class="flex"><button class="btn o s" onclick="receipt('${s.id}')">Struk</button>${s.void?'':`<button class="btn r s" onclick="voidS('${s.id}')">Batalkan</button>`}</td></tr>`).join('')}</table></div>`:empty('Belum ada transaksi pada periode ini.')}</div>
+${shopCard()}<div class="card np"><h3>Data</h3><p class="mu" style="margin-top:0">Data tersimpan di browser perangkat ini. Backup secara berkala agar aman.</p><div class="flex"><button class="btn o" onclick="backup()">Backup data</button><button class="btn o" onclick="restore()">Pulihkan data</button><button class="btn r" onclick="wipe()">Hapus semua data</button></div></div>`}
+function voidS(id){const s=db.sales.find(x=>x.id==id);if(!confirm('Batalkan transaksi '+s.no+'? Stok dikembalikan.'))return;s.items.forEach(i=>{const p=P(i.id);if(p)p.stock+=i.qty});s.void=true;save();render()}
+function backup(){modal(`<h3 style="margin-top:0">Backup Data</h3><p class="mu">Salin teks di bawah dan simpan di tempat aman.</p><textarea id="bk" rows="9" readonly onfocus="this.select()">${esc(JSON.stringify(db))}</textarea><div class="flex" style="margin-top:12px"><button class="btn" onclick="$('#bk').select();try{document.execCommand('copy');toast('Tersalin')}catch(e){}">Salin</button><button class="btn o" onclick="closeM()">Tutup</button></div>`)}
+function restore(){modal(`<h3 style="margin-top:0">Pulihkan Data</h3><p class="mu">Tempel hasil backup. Data saat ini akan diganti.</p><textarea id="rs" rows="9"></textarea><div class="flex" style="margin-top:12px"><button class="btn" onclick="doRestore()">Pulihkan</button><button class="btn o" onclick="closeM()">Batal</button></div>`)}
+function doRestore(){try{const d=JSON.parse($('#rs').value);if(!Array.isArray(d.products))throw 0;db={shop:d.shop||{},products:d.products||[],sales:d.sales||[],purchases:d.purchases||[],adj:d.adj||[],orders:d.orders||[],pin:d.pin||''};save();closeM();render();toast('Data dipulihkan')}catch(e){toast('Format backup tidak valid')}}
+function wipe(){if(confirm('Hapus SEMUA data produk, penjualan, dan belanja? Tidak bisa dibatalkan.')&&confirm('Yakin? Pastikan sudah backup.')){db={shop:db.shop,products:[],sales:[],purchases:[],adj:[],orders:[]};save();S.cart=[];S.order=null;render()}}
+/* PESANAN & MODE PELANGGAN */
+const nb=()=>db.orders.filter(o=>o.st=='baru').length;
+const OB=()=>{const o=db.orders.find(x=>x.id==S.order);return o?`<div class="ob">📲 ${o.no} · ${esc(o.name)}${o.table?' · Meja '+esc(o.table):''}${o.note?`<br><small>Catatan: ${esc(o.note)}</small>`:''}<br><a href="#" onclick="S.order=null;cartR();return false" style="font-size:12px;color:var(--g7)">Lepas dari pesanan</a></div>`:''};
+function vOrder(){const nw=db.orders.filter(o=>o.st=='baru').sort((a,b)=>a.ts-b.ts),old=db.orders.filter(o=>o.st!='baru').sort((a,b)=>b.ts-a.ts).slice(0,15);
+return `<h1>Pesanan Masuk</h1><p class="sub">Pesanan dari pelanggan yang memilih menu sendiri. Proses di kasir untuk pembayaran.</p>
+<div class="card"><h3>Mode Pelanggan</h3><p class="mu" style="margin-top:0">Buka di layar/tablet pelanggan agar mereka memilih menu sendiri. Tip: buka halaman ini di tab lain pada browser yang sama, lalu aktifkan Mode Pelanggan di tab itu, supaya pesanan langsung masuk ke sini.</p><div class="flex"><button class="btn" onclick="openCust()">Buka Mode Pelanggan</button><input id="pin" type="password" inputmode="numeric" placeholder="PIN keluar (opsional)" style="width:200px" value="${esc(db.pin||'')}"><button class="btn o" onclick="db.pin=$('#pin').value.trim();save();toast('PIN disimpan')">Simpan PIN</button></div></div>
+${nw.length?nw.map(o=>`<div class="card"><div class="flex" style="justify-content:space-between"><div><b style="font-size:16px">${o.no} · ${esc(o.name)}</b>${o.table?` <span class="tag ok">Meja ${esc(o.table)}</span>`:''}<div class="mu">${fdt(o.ts)}</div></div><b class="tot">${rp(sum(o.items,i=>i.qty*i.price))}</b></div><div style="margin:10px 0">${o.items.map(i=>`<div class="row"><span>${i.qty} × ${esc(i.name)}</span><span>${rp(i.qty*i.price)}</span></div>`).join('')}${o.note?`<div class="mu" style="margin-top:6px">📝 ${esc(o.note)}</div>`:''}</div><div class="flex"><button class="btn" onclick="procO('${o.id}')">Proses di Kasir</button><button class="btn r" onclick="rejO('${o.id}')">Tolak</button></div></div>`).join(''):`<div class="card">${empty('Belum ada pesanan baru.')}</div>`}
+<div class="card"><h3>Riwayat Pesanan</h3>${old.length?`<div class="tw"><table><tr><th>No</th><th>Waktu</th><th>Pelanggan</th><th>Status</th></tr>${old.map(o=>`<tr><td>${o.no}</td><td>${fdt(o.ts)}</td><td>${esc(o.name)}</td><td><span class="tag ${o.st=='selesai'?'ok':'out'}">${o.st=='selesai'?'Selesai '+(o.trx||''):'Ditolak'}</span></td></tr>`).join('')}</table></div>`:empty('Belum ada riwayat.')}</div>`}
+function procO(id){const o=db.orders.find(x=>x.id==id);if(S.cart.length&&!confirm('Keranjang kasir akan diganti dengan pesanan ini. Lanjutkan?'))return;
+S.cart=[];const miss=[];o.items.forEach(i=>{const p=P(i.id);if(!p){miss.push(i.name+' (dihapus)');return}const q=Math.min(i.qty,p.stock);if(q<i.qty)miss.push(i.name+' (stok kurang)');if(q>0)S.cart.push({id:i.id,qty:q})});
+S.order=id;S.disc='';S.paid='';go('pos');if(miss.length)toast('Perhatikan: '+miss.join(', '))}
+function rejO(id){if(!confirm('Tolak pesanan ini?'))return;db.orders.find(x=>x.id==id).st='batal';save();render()}
+function openCust(){S.cust=true;S.cc=[];S.cs='menu';S.ccat=0;custR()}
+function exitCust(){if(db.pin)modal(`<h3 style="margin-top:0">Keluar Mode Pelanggan</h3><label>Masukkan PIN kasir</label><input id="pn" type="password" inputmode="numeric"><div class="flex" style="margin-top:12px"><button class="btn" onclick="chkPin()">Keluar</button><button class="btn o" onclick="closeM()">Batal</button></div>`);else outCust()}
+function chkPin(){if($('#pn').value==db.pin)outCust();else toast('PIN salah')}
+function outCust(){closeM();S.cust=false;const e=$('#cust');e.style.display='none';e.innerHTML='';document.body.style.overflow='';render()}
+const cqty=id=>(S.cc.find(c=>c.id==id)||{}).qty||0;
+function cq(id,d){const p=P(id);let c=S.cc.find(x=>x.id==id);if(!c){if(d<0)return;c={id,qty:0};S.cc.push(c)}c.qty+=d;if(c.qty>p.stock){c.qty=p.stock;toast('Stok tidak cukup')}if(c.qty<=0)S.cc=S.cc.filter(x=>x!==c);if(!S.cc.length)S.cs='menu';custR()}
+function sendOrder(){const it=S.cc.map(c=>({p:P(c.id),q:c.qty})).filter(x=>x.p&&x.q>0);if(!it.length)return toast('Pilih menu dulu');if(!S.cn.trim())return toast('Isi nama Anda dulu');
+for(const x of it)if(x.q>x.p.stock)return toast('Stok '+x.p.name+' tidak cukup');
+const o={id:uid(),no:'A-'+String(db.orders.length+1).padStart(3,'0'),ts:Date.now(),name:S.cn.trim(),table:S.ct.trim(),note:S.cnote.trim(),items:it.map(x=>({id:x.p.id,name:x.p.name,qty:x.q,price:x.p.price})),st:'baru'};
+db.orders.push(o);save();S.cno=o.no;S.cdn=o.name;S.cc=[];S.cn='';S.ct='';S.cnote='';S.cs='done';custR();setTimeout(()=>{if(S.cust&&S.cs=='done'){S.cs='menu';custR()}},15000)}
+function custR(){const e=$('#cust');e.style.display='block';document.body.style.overflow='hidden';const sc=e.scrollTop,keep=S.lcs==S.cs;S.lcs=S.cs;
+const n=sum(S.cc,c=>c.qty),t=sum(S.cc,c=>P(c.id)?P(c.id).price*c.qty:0);
+let h=`<div class="ch"><div class="logo" style="padding:0">${logoI()}<div><b>${esc(shop().name)}</b><small>Pesan sendiri</small></div></div><button class="cx" onclick="exitCust()">🔒 Kasir</button></div>`;
+if(S.cs=='done')h+=`<div class="cw cdone"><div class="th" style="width:150px;height:150px;margin:0 auto 10px">${art('gulaaren')}</div><h2>Terima kasih, ${esc(S.cdn)}!</h2><p>Pesanan Anda sudah dikirim ke kasir.</p><div class="cno">${S.cno}</div><p class="mu">Sebutkan nomor ini ke kasir untuk pembayaran.</p><button class="btn" style="padding:12px 24px" onclick="S.cs='menu';custR()">Pesan lagi</button></div>`;
+else if(S.cs=='sheet')h+=`<div class="cw"><h2>Pesanan Anda</h2><p class="mu">Cek kembali pesanan, lalu isi nama.</p><div class="card">${S.cc.map(c=>{const p=P(c.id);return `<div class="ci"><div class="flex" style="flex-wrap:nowrap"><div class="th">${pic(p)}</div><div><b>${esc(p.name)}</b><div class="mu">${rp(p.price)}</div></div></div><div style="text-align:right;font-weight:700">${rp(p.price*c.qty)}</div><div class="qty"><button onclick="cq('${c.id}',-1)">−</button><b>${c.qty}</b><button onclick="cq('${c.id}',1)">+</button></div><div></div></div>`}).join('')}<div class="row tot" style="margin-top:8px"><span>Total</span><span>${rp(t)}</span></div></div><div class="card"><div class="fg"><div><label>Nama Anda *</label><input value="${esc(S.cn)}" oninput="S.cn=this.value" maxlength="30"></div><div><label>No. meja (opsional)</label><input value="${esc(S.ct)}" oninput="S.ct=this.value" maxlength="8"></div></div><label style="margin-top:10px">Catatan (opsional)</label><input value="${esc(S.cnote)}" oninput="S.cnote=this.value" placeholder="mis. less sugar, tanpa es" maxlength="80"></div><div class="flex"><button class="btn o" style="padding:14px" onclick="S.cs='menu';custR()">← Tambah menu</button><button class="btn" style="flex:1;padding:14px" onclick="sendOrder()">Kirim Pesanan</button></div></div>`;
+else{const cs=['Semua',...cats()],cn=cs[S.ccat]||'Semua',l=db.products.filter(p=>cn=='Semua'||p.cat==cn);
+h+=`<div class="cw"><h2>Mau minum apa hari ini? ☕</h2><p class="mu" style="margin:0 0 6px">Pilih menu favoritmu, lalu kirim pesanan ke kasir.</p><div class="chips">${cs.map((x,i)=>`<span class="chip ${cn==x?'on':''}" onclick="S.ccat=${i};custR()">${esc(x)}</span>`).join('')}</div>${l.length?`<div class="cg">${l.map(p=>{const q=cqty(p.id);return `<div class="cc"><div class="th">${pic(p)}</div><b>${esc(p.name)}</b><div class="pr">${rp(p.price)}</div>${p.stock<=0?'<button class="btn" disabled>Habis</button>':q?`<div class="cst"><button onclick="cq('${p.id}',-1)">−</button><b>${q}</b><button onclick="cq('${p.id}',1)">+</button></div>`:`<button class="btn" onclick="cq('${p.id}',1)">+ Tambah</button>`}</div>`}).join('')}</div>`:empty('Menu belum tersedia.')}</div>`;
+if(n)h+=`<div class="cbar"><div><b>${n} item</b><div>${rp(t)}</div></div><button class="btn" onclick="S.cs='sheet';custR()">Lihat Pesanan →</button></div>`}
+e.innerHTML=h;e.scrollTop=keep?sc:0}
+addEventListener('storage',e=>{if(e.key!==K||!e.newValue)return;const before=nb();try{db=Object.assign({products:[],sales:[],purchases:[],adj:[],orders:[]},JSON.parse(e.newValue))}catch(x){return}
+if(S.cust){if(S.cs=='menu')custR();return}navR();if(nb()>before)toast('📲 Pesanan baru masuk!');if(S.v=='order')render();else if(S.v=='pos')grid()});
+/* PROFIL TOKO & LOGO */
+const LOGO='<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#fff"/><circle cx="50" cy="50" r="46" fill="#0f4d37"/><path d="M28 46h38v14a14 14 0 0 1-14 14H42a14 14 0 0 1-14-14z" fill="#fff"/><path d="M66 50h4a7 7 0 0 1 0 14h-5" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M38 38c-4-5 4-7 0-13M48 38c-4-5 4-7 0-13M58 38c-4-5 4-7 0-13" fill="none" stroke="#9fd8b8" stroke-width="3" stroke-linecap="round"/><rect x="26" y="78" width="46" height="4" rx="2" fill="#9fd8b8"/></svg>';
+const shop=()=>Object.assign({name:'Nice Coffe',address:'',phone:'',logo:''},db.shop);
+const logoImg=()=>shop().logo?`<img src="${shop().logo}" alt="" style="width:100%;height:100%;object-fit:contain">`:LOGO;
+const logoI=c=>`<i class="${c||''}">${logoImg()}</i>`;
+const addrH=()=>{const s=shop(),a=esc(s.address).replace(/\n/g,'<br>');return (a||s.phone)?`<span style="font-size:11.5px">${a?a+'<br>':''}${s.phone?'Telp. '+esc(s.phone)+'<br>':''}</span>`:''};
+function shopCard(){const s=shop();return `<div class="card np"><h3>Profil Toko</h3><p class="mu" style="margin-top:0">Logo, nama, dan alamat tampil di halaman utama kasir dan di struk.</p><div class="flex" style="align-items:flex-start"><div class="th" id="lgp" style="width:84px;height:84px">${logoImg()}</div><div style="flex:1;min-width:220px"><div class="fg"><div><label>Nama usaha</label><input id="s_n" value="${esc(s.name)}"></div><div><label>No. telepon / WA (opsional)</label><input id="s_t" value="${esc(s.phone)}"></div></div><label style="margin-top:10px">Alamat (tampil di struk)</label><textarea id="s_a" rows="2" placeholder="mis. Jl. Contoh No. 1, Jakarta">${esc(s.address)}</textarea></div></div><div class="flex" style="margin-top:12px"><label class="btn o s" style="margin:0;cursor:pointer;display:inline-block">🖼️ Unggah logo<input type="file" accept="image/*" hidden onchange="upLogo(this)"></label><button class="btn r s" onclick="setLogo('')">Hapus logo</button><button class="btn" onclick="saveShop()">Simpan profil</button></div></div>`}
+function saveShop(){db.shop=Object.assign(shop(),{name:$('#s_n').value.trim()||'Nice Coffe',phone:$('#s_t').value.trim(),address:$('#s_a').value.trim()});save();render();toast('Profil toko tersimpan')}
+function setLogo(d){db.shop=Object.assign(shop(),{logo:d});save();const p=$('#lgp');if(p)p.innerHTML=logoImg();navR()}
+function upLogo(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,240/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);setLogo(c.toDataURL('image/png'))};im.src=r.result};r.readAsDataURL(f)}
+/* PWA */
+window.IP=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();window.IP=e;navR()});
+addEventListener('appinstalled',()=>{window.IP=null;navR();toast('Aplikasi terpasang')});
+try{if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js')}catch(e){}
+render();
+</script></body></html>
