@@ -73,7 +73,7 @@ const K='nicecoffe_v1';let db={products:[],sales:[],purchases:[],adj:[],orders:[
 try{const r=localStorage.getItem(K);if(r)db=Object.assign(db,JSON.parse(r))}catch(e){}
 const S={cust:false,cc:[],cs:'menu',ccat:0,cn:'',ct:'',cnote:'',cno:'',cdn:'',lcs:'',order:null,v:'pos',cart:[],cat:'Semua',q:'',disc:'',method:'Tunai',paid:'',edit:null,fa:'',fi:null,range:'today',from:'',to:''};
 const $=s=>document.querySelector(s),P=id=>db.products.find(p=>p.id===id);
-const save=()=>{try{localStorage.setItem(K,JSON.stringify(db))}catch(e){toast('Gagal menyimpan data')}};
+const save=()=>{try{const data=JSON.stringify(db);localStorage.setItem(K,data);return true}catch(e){console.error('NEXORA POS: penyimpanan gagal',e);toast(e&&e.name==='QuotaExceededError'?'Penyimpanan penuh. Ekspor backup dan kosongkan ruang penyimpanan.':'Data gagal disimpan. Periksa ruang penyimpanan browser.');return false}};
 const rp=n=>(n<0?'-':'')+'Rp'+Math.abs(Math.round(n||0)).toLocaleString('id-ID');
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -136,10 +136,13 @@ e.innerHTML=`<h3>Keranjang</h3>${OB()}`+(S.cart.length?S.cart.map(c=>{const p=P(
 ${S.method=='Tunai'?`<label style="margin-top:8px">Uang diterima</label><input type="number" min="0" value="${S.paid}" oninput="S.paid=this.value;tt()"><div class="flex" style="margin-top:6px"><button class="btn o s" onclick="S.paid=tot();cartR()">Uang pas</button></div><div class="row"><span>Kembalian</span><b id="kb"></b></div>`:''}
 <div class="flex" style="margin-top:12px"><button class="btn" style="flex:1" ${S.cart.length?'':'disabled'} onclick="pay()">Bayar</button><button class="btn o" ${S.cart.length?'':'disabled'} onclick="S.cart=[];S.disc='';S.paid='';S.order=null;cartR()">Reset</button></div></div>`;tt()}
 function tt(){const t=$('#tt');if(t)t.textContent=rp(tot());const k=$('#kb');if(k){const x=(+S.paid||0)-tot();k.textContent=rp(Math.max(x,0));k.style.color=x<0?'var(--rd)':''}}
-function pay(){const it=S.cart.map(c=>({p:P(c.id),q:c.qty}));for(const x of it)if(x.q>x.p.stock)return toast('Stok '+x.p.name+' tidak cukup');
-const t=tot(),paid=S.method=='Tunai'?+S.paid||0:t;if(paid<t)return toast('Uang diterima kurang');
-const s={id:uid(),no:'TRX-'+String(db.sales.length+1).padStart(4,'0'),ts:Date.now(),items:it.map(x=>({id:x.p.id,name:x.p.name,qty:x.q,price:x.p.price,cost:x.p.cost})),sub:sub(),disc:dsc(),total:t,paid,change:paid-t,method:S.method,cust:(db.orders.find(x=>x.id==S.order)||{}).name||''};
-it.forEach(x=>x.p.stock-=x.q);db.sales.push(s);{const o=db.orders.find(x=>x.id==S.order);if(o){o.st='selesai';o.trx=s.no}S.order=null}save();S.cart=[];S.disc='';S.paid='';render();receipt(s.id)}
+function pay(){const it=S.cart.map(c=>({p:P(c.id),q:c.qty}));for(const x of it){if(!x.p)return toast('Produk dalam keranjang tidak ditemukan');if(!Number.isFinite(x.q)||x.q<=0||x.q>x.p.stock)return toast('Stok '+x.p.name+' tidak cukup')}
+const t=tot(),paid=S.method=='Tunai'?+S.paid||0:t;if(!Number.isFinite(t)||t<=0)return toast('Total transaksi tidak valid');if(!Number.isFinite(paid)||paid<t)return toast('Uang diterima kurang');
+const order=db.orders.find(x=>x.id==S.order),oldOrder=order?{st:order.st,trx:order.trx}:null;
+const s={id:uid(),no:'TRX-'+String(db.sales.length+1).padStart(4,'0'),ts:Date.now(),items:it.map(x=>({id:x.p.id,name:x.p.name,qty:x.q,price:x.p.price,cost:x.p.cost})),sub:sub(),disc:dsc(),total:t,paid,change:paid-t,method:S.method,cust:order?.name||''};
+it.forEach(x=>x.p.stock-=x.q);db.sales.push(s);if(order){order.st='selesai';order.trx=s.no}
+if(!save()){it.forEach(x=>x.p.stock+=x.q);db.sales.pop();if(order&&oldOrder){order.st=oldOrder.st;order.trx=oldOrder.trx}return}
+S.order=null;S.cart=[];S.disc='';S.paid='';render();receipt(s.id)}
 function receipt(id){const s=db.sales.find(x=>x.id==id);modal(`<div class="rc"><div style="text-align:center"><div style="width:56px;height:56px;margin:0 auto 4px">${logoImg()}</div><b style="font-size:16px">${esc(shop().name)}</b><br>${addrH()}${fdt(s.ts)}<br>${s.no}${s.cust?'<br>Pelanggan: '+esc(s.cust):''}</div><hr>${s.items.map(i=>`<div>${esc(i.name)}</div><div class="row"><span>${i.qty} x ${rp(i.price)}</span><span>${rp(i.qty*i.price)}</span></div>`).join('')}<hr><div class="row"><span>Subtotal</span><span>${rp(s.sub)}</span></div>${s.disc?`<div class="row"><span>Diskon</span><span>-${rp(s.disc)}</span></div>`:''}<div class="row"><b>TOTAL</b><b>${rp(s.total)}</b></div><div class="row"><span>${s.method}</span><span>${rp(s.paid)}</span></div><div class="row"><span>Kembali</span><span>${rp(s.change)}</span></div><hr><div style="text-align:center">Terima kasih ☕</div></div><div class="flex np" style="margin-top:14px"><button class="btn" onclick="print()">Cetak</button><button class="btn o" onclick="closeM()">Tutup</button></div>`)}
 
 /* PRODUK */
